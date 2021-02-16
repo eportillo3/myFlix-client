@@ -35,6 +35,12 @@ export class MainView extends React.Component {
     });
   }
 
+  onBackClick() {
+    this.setState({
+      selectedMovie: null
+    });
+  }
+
 
   render() {
     // If the state isn't initialized, this will throw on runtime
@@ -46,14 +52,23 @@ export class MainView extends React.Component {
 
 
     return (
-      <div className="main-view">
-       {selectedMovie
-          ? <MovieView movie={selectedMovie}/>
-          : movies.map(movie => (
-            <MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/>
+      <div className='main-view'>
+        {selectedMovie ? (
+          <MovieView
+            movie={selectedMovie}
+            onClick={() => this.onBackClick()}
+          />
+        ) : (
+          movies.map((movie) => (
+            <MovieCard
+              key={movie._id}
+              movie={movie}
+              //   onClick={(movie) => console.log(movie)}
+              onClick={(movie) => this.onMovieClick(movie)}
+            />
           ))
-       }
+        )}
       </div>
-     );
-   }
- }
+    );
+  }
+}

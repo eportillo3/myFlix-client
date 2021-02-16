@@ -31816,6 +31816,13 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "onBackClick",
+    value: function onBackClick() {
+      this.setState({
+        selectedMovie: null
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -31832,11 +31839,15 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       return _react.default.createElement("div", {
         className: "main-view"
       }, selectedMovie ? _react.default.createElement(_movieView.MovieView, {
-        movie: selectedMovie
+        movie: selectedMovie,
+        onClick: function onClick() {
+          return _this3.onBackClick();
+        }
       }) : movies.map(function (movie) {
         return _react.default.createElement(_movieCard.MovieCard, {
           key: movie._id,
-          movie: movie,
+          movie: movie //   onClick={(movie) => console.log(movie)}
+          ,
           onClick: function onClick(movie) {
             return _this3.onMovieClick(movie);
           }
