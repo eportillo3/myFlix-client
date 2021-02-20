@@ -48372,9 +48372,17 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           movies = _this$state.movies,
           selectedMovie = _this$state.selectedMovie,
           user = _this$state.user,
-          register = _this$state.register; // if (!register) return <RegisterView onRegister={(register) => this.onRegister(register)}/>
-      // if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-      // Before the movies have been loaded
+          register = _this$state.register;
+      if (!register) return _react.default.createElement(_registrationView.RegisterView, {
+        onRegister: function onRegister(register) {
+          return _this3.onRegister(register);
+        }
+      });
+      if (!user) return _react.default.createElement(_loginView.LoginView, {
+        onLoggedIn: function onLoggedIn(user) {
+          return _this3.onLoggedIn(user);
+        }
+      }); // Before the movies have been loaded
 
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
