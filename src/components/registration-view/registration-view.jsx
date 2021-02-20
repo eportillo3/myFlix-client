@@ -25,7 +25,7 @@ export function RegisterView(props) {
               <Form.Group controlId='formBasicText'>
                   <Form.Label>Username</Form.Label>
                   <Form.Control 
-                  type='password'
+                  type='username'
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder='Enter usename'

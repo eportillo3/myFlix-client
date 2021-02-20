@@ -48183,7 +48183,7 @@ function RegisterView(props) {
   }, "Registration Welcome!"), _react.default.createElement(_reactBootstrap.Form.Group, {
     controlId: "formBasicText"
   }, _react.default.createElement(_reactBootstrap.Form.Label, null, "Username"), _react.default.createElement(_reactBootstrap.Form.Control, {
-    type: "password",
+    type: "username",
     value: username,
     onChange: function onChange(e) {
       return setUsername(e.target.value);
