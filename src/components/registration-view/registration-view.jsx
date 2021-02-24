@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Form, Button } from 'react-bootstrap';
 
 import './registration-view.scss';
+import axios from 'axios';
 
 export function RegisterView(props) {
   const [username, setUsername] = useState('');
@@ -13,10 +14,22 @@ export function RegisterView(props) {
   const [birthdate, setBirthdate] = useState('');
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(username, password, confirmPassword, email, birthdate);
-        props.onRegister('test');
-    };
+      e.preventDefault();
+      axios.post('https://myflixapp2021.herokuapp.com/users', {
+        Username: username,
+        Password: password,
+        Email: email,
+        Birthday: birthday
+      })
+      .then(response => {
+        const data = response.data;
+        console.log(data);
+        window.open('/', '_self');
+      })
+      .catch(e => {
+        console.log('error registering the user')
+      });
+    }
 
     return(
       <React.Fragment>
@@ -78,6 +91,7 @@ RegisterView.propTypes = {
       username: PropTypes.string.isRequired,
       password: PropTypes.string.isRequired,
       confirmPassword: PropTypes.string.isRequired,
+      Email: PropTypes.string.isRequired,
       birthdate: PropTypes.string.isRequired
   }),
   onRegister: PropTypes.func,
