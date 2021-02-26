@@ -1,17 +1,3 @@
-.movie-card {
-  margin: 10px 0px;
-}
-
-.movie-img {
-  padding: 5px;
-}
-
-.more-button {
-  margin: auto;
-  margin-top: 10px;
-  background-color: #0984e3;
-  border: none;
-}
 .movie-view {
   margin: 0px 50px;
 }
@@ -64,6 +50,31 @@
 
 .submit-button {
   background-color: #0984e3;
+}
+.userProfile {
+  color: white;
+}
+
+h1 {
+  text-align: center;
+}
+
+.favoriteMovies {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.director-row,
+h4 {
+  color: white;
+  margin-top: 20px;
+}
+
+.button-div {
+  margin: 20px;
+}
+.genre-row {
+  color: white;
+  margin-top: 20px;
 }
 * {
   margin: 0;
