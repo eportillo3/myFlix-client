@@ -1,8 +1,13 @@
 import React from "react";
 import axios from "axios";
 
+import { connect } from "react-redux";
+
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
+import { setMovies } from "../../actions/actions";
+
+import MoviesList from "../movies-list/movies-list";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
@@ -11,8 +16,9 @@ import { ProfileView } from "../profile-view/profile-view";
 import { DirectorView } from "../director-view/director-view";
 import { GenreView } from "../genre-view/genre-view";
 import { ProfileUpdate } from "../profile-update/profile-update";
-import "./main-view.scss";
+
 import { Link } from "react-router-dom";
+import VisibilityFilterInput from "../visibility-filter-input/visibility-filter-input.jsx";
 import {
   Row,
   Col,
@@ -24,14 +30,16 @@ import {
   Button,
 } from "react-bootstrap";
 
-export class MainView extends React.Component {
+import "./main-view.scss";
+
+class MainView extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      movies: [],
       user: null,
-      selectedMovie: "",
+      // movies: [],
+      // selectedMovie: "",
       // register: null
     };
   }
@@ -52,20 +60,12 @@ export class MainView extends React.Component {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        this.setState({
-          movies: response.data,
-        });
+        this.props.setMovies(response.data);
       })
       .catch(function (error) {
         console.log(error);
       });
   }
-
-  // onMovieClick(movie) {
-  //   this.setState({
-  //     selectedMovie: movie,
-  //   });
-  // }
 
   // when user successsfully logs in, this function updates the 'user' property in thstate to that particular user
   onLoggedIn(authData) {
@@ -94,7 +94,7 @@ export class MainView extends React.Component {
     // If the state isn't initialized, this will throw on runtime
     // before the data is initially loaded
     // const { movies, selectedMovie, user, register } = this.state;
-    const { movies, selectedMovie, user } = this.state;
+    // const { movies, selectedMovie, user } = this.state;
 
     // if (!register)
     //   return (
@@ -106,6 +106,9 @@ export class MainView extends React.Component {
 
     // Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
+
+    let { movies, VisibilityFilter } = this.props;
+    let { user } = this.state;
 
     return (
       <div>
@@ -222,3 +225,9 @@ export class MainView extends React.Component {
     );
   }
 }
+
+let mapStateToProps = (state) => {
+  return { movies: state.movies };
+};
+
+export default connect(mapStateToProps, { setMovies })(MainView);
