@@ -2,12 +2,12 @@ import React from "react";
 import axios from "axios";
 
 import { connect } from "react-redux";
-
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import { setMovies } from "../../actions/actions";
 
 import MoviesList from "../movies-list/movies-list";
+
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
@@ -105,9 +105,9 @@ class MainView extends React.Component {
     //   return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
 
     // Before the movies have been loaded
-    if (!movies) return <div className="main-view" />;
+    // if (!movies) return <div className="main-view" />;
 
-    let { movies, VisibilityFilter } = this.props;
+    let { movies, visibilityFilter } = this.props;
     let { user } = this.state;
 
     return (
@@ -151,9 +151,15 @@ class MainView extends React.Component {
                 </Link>
               </ul>
             )}
+            <Form inline>
+              <VisibilityFilterInput
+                variant="outline-light"
+                visibilityFilter={visibilityFilter}
+              />
+            </Form>
           </Navbar>
           <div className="main-view">
-            <Route
+            {/* <Route
               exact
               path="/"
               render={() => {
@@ -166,6 +172,22 @@ class MainView extends React.Component {
                     {movies.map((m) => (
                       <MovieCard key={m._id} movie={m} />
                     ))}
+                  </div>
+                );
+              }}
+            /> */}
+
+            <Route
+              exact
+              path={["/", "/login"]}
+              render={() => {
+                if (!user)
+                  return (
+                    <LoginView onLoggedIn={(data) => this.onLoggedIn(data)} />
+                  );
+                return (
+                  <div className="movie-grid">
+                    <MoviesList movies={movies} />;
                   </div>
                 );
               }}
