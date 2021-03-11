@@ -9,7 +9,12 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
 import axios from "axios";
-export class ProfileView extends React.Component {
+
+// Redux
+import { connect } from "react-redux";
+import { setMovies, setUser } from "../../actions/actions";
+
+class ProfileView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -163,6 +168,13 @@ export class ProfileView extends React.Component {
     );
   }
 }
+
 ProfileView.propTypes = {
   movies: PropTypes.array.isRequired,
 };
+
+let mapStateToProps = (state) => {
+  return { movies: state.movies, user: state.users };
+};
+
+export default connect(mapStateToProps, { setMovies, setUser })(ProfileView);
