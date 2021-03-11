@@ -4,31 +4,21 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import { setMovies } from "../../actions/actions";
+import { setMovies, setUser } from "../../actions/actions";
 
 import MoviesList from "../movies-list/movies-list";
 
-import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { RegisterView } from "../registration-view/registration-view";
-import { ProfileView } from "../profile-view/profile-view";
+import ProfileView from "../profile-view/profile-view";
 import { DirectorView } from "../director-view/director-view";
 import { GenreView } from "../genre-view/genre-view";
 import { ProfileUpdate } from "../profile-update/profile-update";
 
 import { Link } from "react-router-dom";
 import VisibilityFilterInput from "../visibility-filter-input/visibility-filter-input.jsx";
-import {
-  Row,
-  Col,
-  Navbar,
-  Nav,
-  NavDropdown,
-  Form,
-  FormControl,
-  Button,
-} from "react-bootstrap";
+import { Navbar, Form, Button } from "react-bootstrap";
 
 import "./main-view.scss";
 
@@ -70,6 +60,7 @@ class MainView extends React.Component {
   // when user successsfully logs in, this function updates the 'user' property in thstate to that particular user
   onLoggedIn(authData) {
     console.log(authData);
+    this.props.setUser(authData.user.Username);
     this.setState({
       user: authData.user.Username,
     });
@@ -91,22 +82,6 @@ class MainView extends React.Component {
   }
 
   render() {
-    // If the state isn't initialized, this will throw on runtime
-    // before the data is initially loaded
-    // const { movies, selectedMovie, user, register } = this.state;
-    // const { movies, selectedMovie, user } = this.state;
-
-    // if (!register)
-    //   return (
-    //     <RegisterView onRegister={(register) => this.onRegister(register)} />
-    //   );
-
-    // if (!user)
-    //   return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
-
-    // Before the movies have been loaded
-    // if (!movies) return <div className="main-view" />;
-
     let { movies, visibilityFilter } = this.props;
     let { user } = this.state;
 
@@ -159,24 +134,6 @@ class MainView extends React.Component {
             </Form>
           </Navbar>
           <div className="main-view">
-            {/* <Route
-              exact
-              path="/"
-              render={() => {
-                if (!user)
-                  return (
-                    <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
-                  );
-                return (
-                  <div className="movie-grid">
-                    {movies.map((m) => (
-                      <MovieCard key={m._id} movie={m} />
-                    ))}
-                  </div>
-                );
-              }}
-            /> */}
-
             <Route
               exact
               path={["/", "/login"]}
@@ -236,11 +193,7 @@ class MainView extends React.Component {
                 );
               }}
             />
-            <Route
-              exact
-              path="/users/:userId"
-              render={() => <ProfileView movies={movies} />}
-            />
+            <Route exact path="/users/:userId" render={() => <ProfileView />} />
           </div>
         </Router>
       </div>
@@ -249,7 +202,7 @@ class MainView extends React.Component {
 }
 
 let mapStateToProps = (state) => {
-  return { movies: state.movies };
+  return { movies: state.movies, user: state.users };
 };
 
-export default connect(mapStateToProps, { setMovies })(MainView);
+export default connect(mapStateToProps, { setMovies, setUser })(MainView);
